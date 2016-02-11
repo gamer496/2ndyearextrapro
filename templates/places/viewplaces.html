@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}View All places{% endblock %}
+{% block content %}
+  {% for place in places %}
+    <a href="{% url 'viewplace' place.id %}">{{place}}</a>
+  {% endfor %}
+{% endblock %}
