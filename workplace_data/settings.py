@@ -137,4 +137,4 @@ EMAIL_USE_TLS=True
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_PORT=587
 EMAIL_HOST_USER='singhjasdeep496@gmail.com'
-EMAIL_HOST_PASSWORD='xyzzy@&$88008010'
+EMAIL_HOST_PASSWORD='not visible'
