@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}{{wuser.user.name}}{% endblock %}
+{% block css %}
+<style>
+.container
+{
+  margin-top : 5%;
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{wuser.user.username}}</h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+
+                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
+                  <dl>
+                    <dt>DEPARTMENT:</dt>
+                    <dd>Administrator</dd>
+                    <dt>HIRE DATE</dt>
+                    <dd>11/12/2013</dd>
+                    <dt>DATE OF BIRTH</dt>
+                       <dd>11/12/2013</dd>
+                    <dt>GENDER</dt>
+                    <dd>Male</dd>
+                  </dl>
+                </div>-->
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>First Name:</td>
+                        <td>{{wuser.user.first_name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Last Name</td>
+                        <td>{{wuser.user.last_name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Member since</td>
+                        <td>Member since will go here</td>
+                      </tr>
+                      <tr>
+                        <td>Country</td>
+                        <td>{{wuser.country}}</td>
+                      </tr>
+
+                         <tr>
+                             <tr>
+                        <td>Address Line 1</td>
+                        <td>Address Line 1 will go here</td>
+                      </tr>
+                        <tr>
+                        <td>Address Line 2</td>
+                        <td>Address Line 2</td>
+                      </tr>
+
+                      </tr>
+
+                    </tbody>
+                  </table>
+                  {% ifequal own_id True %}
+                    <a href="{% url 'viewreceivedmessages' %}" class="btn btn-primary">View received messages</a>
+                  {% else %}
+                    <a href="{% url 'sendmessage' receiver_id=wuser.id  %}" class="btn btn-primary">Message</a>
+                    <button class="btn btn-primary">Reputation</button>
+                  {% endifequal %}
+                </div>
+              </div>
+            </div>
+                 <div class="panel-footer">
+                        <p>Wusers description will go here</p>
+                    </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}

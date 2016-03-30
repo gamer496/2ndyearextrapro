@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Viewplace{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'places/css/viewplace.css' %}">{% endblock %}
+{% block content %}
+  {{place}}
+  {{thisUserUpvote}}
+  {{thisUserDownvote}}
+  <div class="vote roundrect vote-buttons">
+    {% ifequal thisUserUpvote 0 %}
+      <div class="increment up vote-up" title="Vote up this place"></div>
+    {% else %}
+      <div class="incremented vote-up up selected" title="You upvoted this place.Click again to take back your vote"></div>
+    {% endifequal %}
+    {% ifequal thisUserDownvote 0 %}
+      <div class="increment down vote-down" title="Downvote this place"></div>
+    {% else %}
+      <div class="incremented vote-down selected" title="You downvoted this place.Click again to take back your vote"></div>
+    {% endifequal %}
+    <div class="count">{{count}}</div>
+  </div>
+  {% for info in infos %}
+    {{info.0.title}}
+    {{info.0.description}}<br/>
+    {% ifequal info.1 0 %}
+      <a href="{% url 'voteforpoint' point_id=info.0.id %}" class="mark-right not-selected">Mark as right {{info.0.marked_as_right.count}}</a><br/>
+    {% else %}
+      <a href="{% url 'voteforpoint' point_id=info.0.id %}" class="mark-right selected">Marked as right {{info.0.marked_as_right.count}}</a><br/>
+    {% endifequal %}
+    {% ifequal info.2 0 %}
+      <a href="{% url 'voteforpoint' point_id=info.0.id %}" class="mark-wrong not-selected">Mark as wrong {{info.0.marked_as_wrong.count}}</a><br/>
+    {% else %}
+      <a href="{% url 'voteforpoint' point_id=info.0.id %}" class="mark-wrong selected">Marked as wrong {{info.0.marked_as_wrong.count}}</a><br/>
+    {% endifequal %}
+  {% endfor %}
+{% endblock %}
+{% block footer_javascript %}<script src="{% static 'places/js/viewplace.js' %}"></script>
+<script>
+var place_id="{{place.id}}";
+var url="{% url 'voteforplace' %}";
+</script>
+<script src="{% static 'places/js/viewplaceforpoints.js' %}"></script>
+{% endblock %}

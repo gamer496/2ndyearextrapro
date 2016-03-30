@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}User Login{% endblock %}
+{% block content %}
+<div class="container">
+        <div class="row">
+            <div class="panel panel-default" style="max-width:60%;margin-left:auto; margin-right:auto;margin-top:5%">
+                <div class="panel-body">
+<form action="" method="POST">
+  <fieldset>
+      <legend>Login</legend>
+  {% csrf_token %}
+  <div class="control-group">
+         <label class="control-label col-sm-2" for="username">Username</label>
+         <div class="controls col-sm-10">
+             <input type="text" id="username" name="username"  placeholder="Username">
+         </div>
+     </div>
+     <div class="control-group">
+         <label class="control-label col-sm-2" for="password">Password</label>
+         <div class="controls col-sm-10">
+             <input type="password" name="password" id="password" placeholder="Password">
+         </div>
+     </div>
+   </fieldset>
+     <div class="control-group">
+         <div class="controls">
+             <button type="submit" class="btn">Login</button>
+         </div>
+     </div>
+   </form>
+ </div>
+ </div>
+ </div>
+ </div>
+{% endblock %}
