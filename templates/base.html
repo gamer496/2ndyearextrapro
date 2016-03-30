@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!doctype html>
 <html>
 <header>
@@ -6,9 +7,171 @@
   {% block header_javascript %}{% endblock %}
   {% include 'jslibraries.html' %}
   {% include 'csslibraires.html' %}
+  <link rel="stylesheet" href="{% static 'main/css/common_css.css' %}">
 </header>
 <body>
-  {% block content %}{% endblock %}
+
+	<nav role="navigation" class="navbar navbar-custom col-md-10 col-md-offset-1">
+		<div class="container-fluid">
+			
+			<div class="navbar-header">
+				<a href="{% url 'mainindex' %}" class="navbar-brand">WorkPlace Data</a>
+			</div>
+
+			<div class="row">
+
+				{% if not user.is_authenticated %}
+					<ul class="nav navbar-nav navbar-right">
+						<li> <a href="#" class="login-toggle">Login</a> </li>
+						<li> <a href="#" class="register-toggle">Register</a> </li>
+					</ul>
+				{% endif %}
+
+				{% if user.is_authenticated %}
+					<ul class="nav navbar-nav">
+
+						<li class="dropdown ">
+							<a class="dropdown-toggle unhovered" data-toggle="dropdown" href="#">Places<span class="caret"></span></a>
+
+								<ul class="dropdown-menu">
+
+									<li> <a href="{% url 'addplace' %}" class="">Add Place</a> </li>
+									<li> <a href="{% url 'viewplaces' %}">View Places</a> </li>
+									
+								</ul>
+						</li>
+
+						<li class="dropdown ">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">Messages<span class="caret"></span></a>
+
+								<ul class="dropdown-menu">
+
+									<li> <a href="{% url 'viewsentmessages' %}">Sent</a> </li>
+									<li> <a href="{% url 'viewreceivedmessages' %}">Recieved</a> </li>
+									
+								</ul>
+						</li>
+						
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ request.user.username }}<span class="caret"></span></a>
+
+								<ul class="dropdown-menu">
+
+									<li> <a href="{% url 'viewprofile' wuser_id=request.user.id %}">Profile</a> </li>
+									<li> <a href="{% url 'userpasswordreset' %}">Password Reset</a> </li>
+									
+								</ul>
+						</li>
+
+						<li> <a href="{% url 'userlogout' %}">Logout</a> </li>
+					
+					</ul>
+				{% endif %}
+
+			</div>
+
+		</div>
+	</nav>  
+
+
+	<!-- <div class="container-fluid"> -->
+	<div class="container-fluid">
+	<div class="row">
+	
+		<div class="col-md-2 col-md-push-9 ">
+			
+			<div class="login-div col-md-12 ">
+				<form action="{% url 'userlogin' %}" method="POST" class="side">
+					{% csrf_token %}
+					<legend><h2>Login</h2></legend>					
+
+					<center>
+						<input type="text" id="username" name="username"  placeholder="Username"> 
+
+						<input type="password" name="password" id="password" placeholder="Password"> 					
+						
+					    <button type="submit" class="btn">Submit</button>
+				    </center>
+				    
+				</form>
+			</div>
+
+			<div class="register-div col-md-12 ">
+				<form action="{% url 'userregistration' %}" method="POST" class="side">
+					{% csrf_token %}
+					<legend><h2>Register</h2></legend>					
+
+					<center>
+						<input id="id_first_name" name="first_name" type="text" placeholder="First Name">
+
+						<input id="id_last_name" name="last_name" type="text" placeholder="Last Name">
+
+						<input id="id_country" maxlength="100" name="country" type="text" placeholder="Country">
+
+						<input id="id_email" name="email" type="email" placeholder="Email">
+
+						<input id="id_username" name="username" type="text" placeholder="Username">
+
+						<input id="id_password" name="password" type="password" placeholder="Password">
+
+						<button type="submit" class="btn">Submit</button>
+					</center>
+					
+				</form>
+			</div>
+
+		</div>
+
+
+		<div class="col-md-7 col-md-offset-2 content col-md-pull-2">	
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+	</div> 
+	
+
 </body>
-{% block footer_javascript %}{% endblock %}
+	<script>
+		$(document).ready(function() {
+			$(".navbar-custom .navbar-nav .dropdown").hoverIntent({
+				sensitivity: 1,
+				interval: 60,
+				timeout: 150,
+				over:function(){
+					// $(this).addClass('open');
+					$(this).find('.dropdown-menu').stop(true,true).fadeIn(200);
+				},
+				out:function() {
+					// $(this).removeClass('open');
+					$(this).find('.dropdown-menu').stop(true,true).fadeOut(150);
+				}
+			});
+
+			$(".login-toggle").click(function() {
+				if( $('.register-div').css('display') != 'none' ) {
+					$(".register-div").fadeOut(150).delay(150);
+					$(".register-div").css("display","none").delay(100);
+					$(".login-div").fadeIn(200);
+				}
+				else if( $('.register-div').css('display') == 'none' && $('.login-div').css('display') == 'none') {
+					$(".login-div").fadeIn(200);
+				}
+			});
+
+			$(".register-toggle").click(function() {
+				if( $('.login-div').css('display') != 'none' ) {
+					$(".login-div").fadeOut(150).delay(150);
+					$(".login-div").css("display","none").delay(100);
+					$(".register-div").fadeIn(200);
+				}
+				else if( $('.login-div').css('display') == 'none' && $('.register-div').css('display') == 'none') {
+					$(".register-div").fadeIn(200);
+				}
+			});
+		})
+	</script>
+	{% block footer_javascript %}{% endblock %}
 </html>
