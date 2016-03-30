@@ -106,7 +106,7 @@ def wuser_logout(request):
         return HttpResponseRedirect("/")
     else:
         logout(request)
-        return HttpResponseRedirect(reverse("userlogin"))
+        return HttpResponseRedirect(reverse("mainindex"))
 
 def reset(request):
     return password_reset(request,template_name=os.path.join("wusers","reset.html"),email_template_name="reset_email.html",subject_template_name="reset_subject.txt",post_reset_redirect=reverse("successrequest"))
